@@ -1,0 +1,22 @@
+---
+#ansible_ssh_pass: 'secret phrase'
+ansible_sudo_pass: 'secret phrase'
+
+prefix: /opt/kya
+ansible_tmp: /tmp/ansible_tmp
+tmp_src: /tmp/src
+
+ant_ver: 1.9.6
+jdk_ver: 8u25-linux-x64
+maven_ver: 3.3.3
+hadoop_ver: 2.6.2
+#zk_ver: 3.4.6
+riak_ver: 2.1.1-1
+solr_ver: 5.3.1
+spark_ver: 1.5.1-bin-hadoop2.6
+
+user: ksto
+user_home: "/home/ksto"
+#ugroup: hellohello
+
+backup: backup

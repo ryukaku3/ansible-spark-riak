@@ -1,0 +1,2 @@
+export M3_HOME=/opt/kya/apache-maven-3.3.3
+export PATH=$PATH:$M3_HOME/bin

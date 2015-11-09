@@ -1,0 +1,39 @@
+- debug: msg="setup env, cp files"
+- copy: src=etc/default/  dest=/etc/default/
+- shell: mkdir -p {{prefix}}
+- copy: src=src/ dest=/tmp/
+
+- debug: msg="setup jdk-{{jdk_ver}}"
+- yum: name=/tmp/jdk-{{jdk_ver}}.rpm state=present
+
+- debug: msg="setup apache-ant-{{ant_ver}}-bin"
+- shell: tar zxvf /tmp/apache-ant-{{ant_ver}}-bin.tar.gz  -C {{prefix}}/ 
+
+- debug: msg="setup apache-maven-{{maven_ver}}-bin"
+- shell: tar zxvf /tmp/apache-maven-{{maven_ver}}-bin.tar.gz  -C {{prefix}}/ 
+
+- debug: msg="setup solr-{{solr_ver}}"
+- shell: tar zxvf /tmp/solr-{{solr_ver}}.tgz  -C {{prefix}}/ 
+
+- debug: msg="setup spark-{{spark_ver}}"
+- shell: tar zxvf /tmp/spark-{{spark_ver}}.tgz  -C {{prefix}}/ 
+
+- command: chown -R root:root {{prefix}}
+
+- debug: msg="setup riak-{{riak_ver}}"
+- yum: name=/tmp/riak-{{riak_ver}}.el7.centos.x86_64.rpm state=present
+
+- debug: msg="add PATH to .bash_profile."
+- lineinfile: dest=/etc/skel/.bash_profile  regexp="java$" insertafter="EOF" line="source /etc/default/java"
+- lineinfile: dest=/etc/skel/.bash_profile  regexp="maven$" insertafter="EOF" line="source /etc/default/maven"
+- lineinfile: dest=/etc/skel/.bash_profile  regexp="spark$" insertafter="EOF" line="source /etc/default/spark"
+- lineinfile: dest=/etc/skel/.bash_profile  regexp="hadoop$" insertafter="EOF" line="source /etc/default/hadoop"
+- lineinfile: dest=/etc/skel/.bash_profile  regexp="ant$" insertafter="EOF" line="source /etc/default/ant"
+- lineinfile: dest=/etc/skel/.bash_profile  regexp="solr$" insertafter="EOF" line="source /etc/default/solr"
+
+- debug: msg="create spark/log4j.properties"
+- command: cp {{prefix}}/spark-{{spark_ver}}/conf/log4j.properties.template  {{prefix}}/spark-{{spark_ver}}/conf/log4j.properties
+- lineinfile: dest={{prefix}}/spark-{{spark_ver}}/conf/log4j.properties regexp=^log4j\.rootCategory=INFO insertafter=^\#log4j\.rootCategory=INFO line=log4j.rootCategory=WARN,\ console
+
+- debug: msg="edit /etc/security/limits.conf"
+- lineinfile: dest=/etc/security/limits.conf regexp=^root\ \-\ nofile  insertbefore=^\#End line=root\ \-\ nofile\ 65536

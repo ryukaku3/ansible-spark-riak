@@ -1,0 +1,2 @@
+export SPARK_HOME=/opt/kya/spark-1.5.1-bin-hadoop2.6
+export PATH=$PATH:$SPARK_HOME/bin

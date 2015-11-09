@@ -1,0 +1,2 @@
+export SOLR_HOME=/opt/kya/solr-5.3.1
+export PATH=$PATH:$SOLR_HOME/bin

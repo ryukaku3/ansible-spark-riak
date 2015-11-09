@@ -1,0 +1,2 @@
+export ANT_HOME=/opt/kya/apache-ant-1.9.6
+export PATH=$PATH:$ANT_HOME/bin

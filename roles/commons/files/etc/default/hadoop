@@ -1,0 +1,2 @@
+export HADOOP_HOME=/opt/kya/hadoop-2.6.2
+export PATH=$PATH:$HADOOP_HOME/bin
